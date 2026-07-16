@@ -185,6 +185,11 @@ body::before{
 .fta{resize:vertical;min-height:86px;line-height:1.55;}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:380px){.frow{grid-template-columns:1fr;}}
+.toggle{display:flex;gap:8px;}
+.tg{flex:1;padding:12px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);color:var(--muted);font-family:var(--body);font-weight:600;font-size:14px;cursor:pointer;transition:.2s;}
+.tg:hover{border-color:rgba(233,238,255,.24);color:var(--text);}
+.tg.on{background:var(--grad-pm);border-color:transparent;color:#fff;box-shadow:0 8px 20px -8px rgba(255,77,157,.5);}
+.tg:focus-visible{outline:2px solid var(--cy);outline-offset:2px;}
 
 .submit{
   width:100%;padding:17px;margin-top:8px;cursor:pointer;border:0;border-radius:14px;color:#fff;
@@ -285,6 +290,17 @@ footer{margin-top:36px;padding:22px 0 4px;border-top:1px solid var(--line);font-
         </select>
       </div>
       <div class="field">
+        <label class="flabel" id="lContact"></label>
+        <div class="toggle" id="contactToggle">
+          <button type="button" class="tg" data-v="yes" id="cgYes"></button>
+          <button type="button" class="tg" data-v="no" id="cgNo"></button>
+        </div>
+      </div>
+      <div class="field" id="contactWhoField" style="display:none">
+        <label class="flabel" id="lContactWho" for="fContactWho"></label>
+        <input class="fin" type="text" id="fContactWho">
+      </div>
+      <div class="field">
         <label class="flabel" id="lBio" for="fBio"></label>
         <textarea class="fta" id="fBio"></textarea>
       </div>
@@ -339,6 +355,8 @@ const T={
     lNick:'Nome in gioco',lServer:'Server di origine',phServer:'es. #1082',
     lIntent:'Intenzione',
     io:['— Seleziona —','Deciso, arrivo','Mi interessa, mandate info','Sto valutando','Solo per info'],
+    lContact:'Hai già parlato con qualcuno dell\'alleanza?',contactYes:'Sì',contactNo:'No',
+    lContactWho:'Con chi?',phContactWho:'Nome del contatto',contactTag:'Contatto',
     lBio:'Presentazione (opzionale)',phBio:'Stile, potenza, lingua…',
     submit:'Invia candidatura',sending:'Invio…',
     okTitle:'Candidatura inviata',
@@ -364,6 +382,8 @@ const T={
     lNick:'Pseudo en jeu',lServer:'Serveur d\'origine',phServer:'ex. #1082',
     lIntent:'Intention',
     io:['— Sélectionner —','Décidé, j\'arrive','Intéressé, envoyez infos','J\'évalue encore','Juste pour info'],
+    lContact:'As-tu déjà parlé à quelqu\'un de l\'alliance ?',contactYes:'Oui',contactNo:'Non',
+    lContactWho:'Avec qui ?',phContactWho:'Nom du contact',contactTag:'Contact',
     lBio:'Présentation (optionnel)',phBio:'Style, puissance, langue…',
     submit:'Envoyer ma candidature',sending:'Envoi…',
     okTitle:'Candidature envoyée',
@@ -389,6 +409,8 @@ const T={
     lNick:'In-game name',lServer:'Home server',phServer:'e.g. #1082',
     lIntent:'Intent',
     io:['— Select —','Locked in, I\'m coming','Interested, send info','Still weighing it','Info only'],
+    lContact:'Have you already talked to someone in the alliance?',contactYes:'Yes',contactNo:'No',
+    lContactWho:'With who?',phContactWho:'Contact name',contactTag:'Contact',
     lBio:'About you (optional)',phBio:'Playstyle, power, language…',
     submit:'Submit application',sending:'Sending…',
     okTitle:'Application sent',
@@ -414,6 +436,8 @@ const T={
     lNick:'Spielername',lServer:'Heimatserver',phServer:'z.B. #1082',
     lIntent:'Absicht',
     io:['— Auswählen —','Entschieden, ich komme','Interessiert, Infos bitte','Überlege noch','Nur zur Info'],
+    lContact:'Hast du schon mit jemandem der Allianz gesprochen?',contactYes:'Ja',contactNo:'Nein',
+    lContactWho:'Mit wem?',phContactWho:'Name des Kontakts',contactTag:'Kontakt',
     lBio:'Vorstellung (optional)',phBio:'Spielstil, Stärke, Sprache…',
     submit:'Bewerbung senden',sending:'Sende…',
     okTitle:'Bewerbung gesendet',
@@ -424,7 +448,7 @@ const T={
   },
 };
 
-const state={lang:'it',seat:null,seatIdx:-1,alliance:null};
+const state={lang:'it',seat:null,seatIdx:-1,alliance:null,contact:null};
 let remoteTexts={};
 const $=id=>document.getElementById(id);
 
@@ -445,6 +469,9 @@ function setLang(l){
   $('lServer').textContent=t.lServer;$('fServer').placeholder=t.phServer;
   $('lIntent').textContent=t.lIntent;
   t.io.forEach((x,i)=>$('io'+i).textContent=x);
+  $('lContact').textContent=t.lContact;
+  $('cgYes').textContent=t.contactYes;$('cgNo').textContent=t.contactNo;
+  $('lContactWho').textContent=t.lContactWho;$('fContactWho').placeholder=t.phContactWho;
   $('lBio').textContent=t.lBio;$('fBio').placeholder=t.phBio;
   $('btnSubmit').textContent=t.submit;
   $('okTitle').textContent=t.okTitle;$('okSub').textContent=t.okSub;
@@ -519,10 +546,16 @@ function submitForm(){
   const server=$('fServer').value.trim();
   if(!state.seat){alert(t.errSeat);return;}
   if(!nick||!server||!state.alliance){alert(t.errFields);return;}
+  let bio=$('fBio').value.trim();
+  if(state.contact==='yes'){
+    const who=$('fContactWho').value.trim();
+    const line='🤝 '+t.contactTag+': '+(who||'—');
+    bio=bio?line+'\n'+bio:line;
+  }
   const btn=$('btnSubmit');btn.disabled=true;btn.textContent=t.sending;
   const payload={
     lang:state.lang,nickname:nick,server,alliance:state.alliance,
-    intent:$('fIntent').value,bio:$('fBio').value.trim(),
+    intent:$('fIntent').value,bio,
     seat:state.seat,ts:new Date().toISOString(),
   };
   fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
@@ -537,6 +570,12 @@ function submitForm(){
 }
 
 document.querySelectorAll('.lang').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+document.querySelectorAll('#contactToggle .tg').forEach(b=>b.addEventListener('click',()=>{
+  state.contact=b.dataset.v;
+  document.querySelectorAll('#contactToggle .tg').forEach(x=>x.classList.toggle('on',x===b));
+  $('contactWhoField').style.display=state.contact==='yes'?'':'none';
+  if(state.contact!=='yes')$('fContactWho').value='';
+}));
 setLang('it');
 loadRemote();
 </script>
