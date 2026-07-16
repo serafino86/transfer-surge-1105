@@ -277,9 +277,13 @@ footer{margin-top:36px;padding:22px 0 4px;border-top:1px solid var(--line);font-
           <input class="fin" type="text" id="fNick">
         </div>
         <div class="field">
-          <label class="flabel" id="lServer" for="fServer"></label>
-          <input class="fin" type="text" id="fServer">
+          <label class="flabel" id="lPower" for="fPower"></label>
+          <input class="fin" type="number" id="fPower" min="0" inputmode="numeric">
         </div>
+      </div>
+      <div class="field">
+        <label class="flabel" id="lServer" for="fServer"></label>
+        <input class="fin" type="text" id="fServer">
       </div>
       <div class="field">
         <label class="flabel" id="lIntent" for="fIntent"></label>
@@ -355,7 +359,7 @@ const T={
     rosterPicked:'Scelta',
     reqMissing:'Presentazione in arrivo…',
     formTitle:'Blocca il trasferimento',
-    lNick:'Nome in gioco',lServer:'Server di origine',phServer:'es. #1082',
+    lNick:'Nome in gioco',lPower:'Potenza (THP)',phPower:'es. 165000000',lServer:'Server di origine',phServer:'es. #1082',
     lIntent:'Intenzione',
     io:['— Seleziona —','Deciso, arrivo','Mi interessa, mandate info','Sto valutando','Solo per info'],
     lContact:'Hai già parlato con qualcuno dell\'alleanza?',contactYes:'Sì',contactNo:'No',
@@ -383,7 +387,7 @@ const T={
     rosterPicked:'Choisie',
     reqMissing:'Présentation à venir…',
     formTitle:'Verrouille ton transfert',
-    lNick:'Pseudo en jeu',lServer:'Serveur d\'origine',phServer:'ex. #1082',
+    lNick:'Pseudo en jeu',lPower:'Puissance (THP)',phPower:'ex. 165000000',lServer:'Serveur d\'origine',phServer:'ex. #1082',
     lIntent:'Intention',
     io:['— Sélectionner —','Décidé, j\'arrive','Intéressé, envoyez infos','J\'évalue encore','Juste pour info'],
     lContact:'As-tu déjà parlé à quelqu\'un de l\'alliance ?',contactYes:'Oui',contactNo:'Non',
@@ -411,7 +415,7 @@ const T={
     rosterPicked:'Chosen',
     reqMissing:'Intro incoming…',
     formTitle:'Lock your transfer',
-    lNick:'In-game name',lServer:'Home server',phServer:'e.g. #1082',
+    lNick:'In-game name',lPower:'Power (THP)',phPower:'e.g. 165000000',lServer:'Home server',phServer:'e.g. #1082',
     lIntent:'Intent',
     io:['— Select —','Locked in, I\'m coming','Interested, send info','Still weighing it','Info only'],
     lContact:'Have you already talked to someone in the alliance?',contactYes:'Yes',contactNo:'No',
@@ -439,7 +443,7 @@ const T={
     rosterPicked:'Gewählt',
     reqMissing:'Vorstellung folgt…',
     formTitle:'Transfer sichern',
-    lNick:'Spielername',lServer:'Heimatserver',phServer:'z.B. #1082',
+    lNick:'Spielername',lPower:'Stärke (THP)',phPower:'z.B. 165000000',lServer:'Heimatserver',phServer:'z.B. #1082',
     lIntent:'Absicht',
     io:['— Auswählen —','Entschieden, ich komme','Interessiert, Infos bitte','Überlege noch','Nur zur Info'],
     lContact:'Hast du schon mit jemandem der Allianz gesprochen?',contactYes:'Ja',contactNo:'Nein',
@@ -472,6 +476,7 @@ function setLang(l){
   $('rosterHint').textContent=t.rosterHint;
   $('formTitle').textContent=t.formTitle;
   $('lNick').textContent=t.lNick;
+  $('lPower').textContent=t.lPower;$('fPower').placeholder=t.phPower;
   $('lServer').textContent=t.lServer;$('fServer').placeholder=t.phServer;
   $('lIntent').textContent=t.lIntent;
   t.io.forEach((x,i)=>$('io'+i).textContent=x);
@@ -560,8 +565,10 @@ function submitForm(){
     bio=bio?line+'\n'+bio:line;
   }
   const btn=$('btnSubmit');btn.disabled=true;btn.textContent=t.sending;
+  const power=($('fPower').value||'').replace(/[^\d]/g,'');
   const payload={
-    lang:state.lang,nickname:nick,server,alliance:state.alliance,
+    lang:state.lang,nickname:nick,power:power?parseInt(power,10):'',
+    server,alliance:state.alliance,
     intent:$('fIntent').value,bio,
     seat:state.seat,ts:new Date().toISOString(),
   };
