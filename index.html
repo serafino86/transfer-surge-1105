@@ -153,8 +153,10 @@ body::before{
 .roster{display:flex;flex-direction:column;gap:10px;}
 .roster-btn{
   display:block;width:100%;text-align:left;cursor:pointer;font-family:inherit;color:var(--muted);
-  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px;transition:.2s;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px;transition:.2s;position:relative;
 }
+.roster-check{display:none;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;background:var(--grad-pm);padding:3px 9px;border-radius:999px;margin-left:8px;flex-shrink:0;}
+.roster-btn.on .roster-check{display:inline-block;}
 .roster-btn:hover{border-color:rgba(233,238,255,.22);transform:translateY(-2px);background:var(--card2);}
 .roster-btn.on{border-color:transparent;background:linear-gradient(150deg,color-mix(in srgb,var(--v) 22%,var(--card)),var(--card));box-shadow:0 14px 30px -16px rgba(122,92,255,.6);}
 .roster-btn.on::after{}
@@ -348,8 +350,9 @@ const T={
     tierLock:'Scelto',
     tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
     tierDesc:{white:'In crescita. Molti posti disponibili.',blue:'Consolidato. Risorsa preziosa.',purple:'Avanzato. Posti limitati — i server forti ti cercano.',gold:'Top player. Posti rarissimi. Cambi le sorti di un server.'},
-    rosterTitle:'Le alleanze',
-    rosterHint:'Le squadre di punta su #1105. Tocca quella che vuoi puntare.',
+    rosterTitle:'Alleanza di destinazione',
+    rosterHint:'Tocca l\'alleanza su #1105 dove vuoi trasferirti. È la tua scelta.',
+    rosterPicked:'Scelta',
     reqMissing:'Presentazione in arrivo…',
     formTitle:'Blocca il trasferimento',
     lNick:'Nome in gioco',lServer:'Server di origine',phServer:'es. #1082',
@@ -375,8 +378,9 @@ const T={
     tierLock:'Choisi',
     tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
     tierDesc:{white:'En progression. Beaucoup de places.',blue:'Confirmé. Ressource précieuse.',purple:'Avancé. Places limitées — les serveurs forts te cherchent.',gold:'Top joueur. Places rarissimes. Tu changes le destin d\'un serveur.'},
-    rosterTitle:'Les alliances',
-    rosterHint:'Les meilleures équipes sur #1105. Touche celle que tu vises.',
+    rosterTitle:'Alliance de destination',
+    rosterHint:'Touche l\'alliance sur #1105 où tu veux te transférer. C\'est ton choix.',
+    rosterPicked:'Choisie',
     reqMissing:'Présentation à venir…',
     formTitle:'Verrouille ton transfert',
     lNick:'Pseudo en jeu',lServer:'Serveur d\'origine',phServer:'ex. #1082',
@@ -402,8 +406,9 @@ const T={
     tierLock:'Picked',
     tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
     tierDesc:{white:'Growing. Seats available in good numbers.',blue:'Established. A valuable asset.',purple:'Advanced. Limited seats — strong servers want you.',gold:'Top player. Rare seats. You change a server\'s fate.'},
-    rosterTitle:'The alliances',
-    rosterHint:'The top teams on #1105. Tap the one you\'re aiming for.',
+    rosterTitle:'Destination alliance',
+    rosterHint:'Tap the alliance on #1105 you want to transfer to. It\'s your pick.',
+    rosterPicked:'Chosen',
     reqMissing:'Intro incoming…',
     formTitle:'Lock your transfer',
     lNick:'In-game name',lServer:'Home server',phServer:'e.g. #1082',
@@ -429,8 +434,9 @@ const T={
     tierLock:'Gewählt',
     tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
     tierDesc:{white:'Im Aufbau. Viele Plätze frei.',blue:'Etabliert. Wertvolle Ressource.',purple:'Fortgeschritten. Begrenzte Plätze — starke Server suchen dich.',gold:'Top-Spieler. Seltene Plätze. Du veränderst ein Server-Schicksal.'},
-    rosterTitle:'Die Allianzen',
-    rosterHint:'Die Top-Teams auf #1105. Tippe die an, die du anvisierst.',
+    rosterTitle:'Ziel-Allianz',
+    rosterHint:'Tippe die Allianz auf #1105 an, zu der du wechseln willst. Deine Wahl.',
+    rosterPicked:'Gewählt',
     reqMissing:'Vorstellung folgt…',
     formTitle:'Transfer sichern',
     lNick:'Spielername',lServer:'Heimatserver',phServer:'z.B. #1082',
@@ -520,6 +526,7 @@ function buildRoster(){
         <span class="roster-tag">[${a.tag}]</span>
         <span class="roster-name">${a.name}</span>
         <span class="roster-pw">${a.pw.toFixed(1)}B</span>
+        <span class="roster-check">✓ ${t.rosterPicked}</span>
       </div>
       <div class="roster-meter"><i style="right:${(100-a.pw/PWMAX*100).toFixed(1)}%"></i></div>
       <div class="roster-req">${req}</div>`;
