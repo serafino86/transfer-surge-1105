@@ -167,91 +167,7 @@ body::after{
 }
 .panel-text em{color:var(--g);font-style:normal;font-weight:500;}
 
-/* ── POWER INPUT ── */
-.power-row{display:flex;gap:8px;margin-top:14px;}
-.power-field{flex:1;position:relative;}
-.power-field input{
-  width:100%;height:54px;background:var(--bg2);
-  border:1px solid var(--line);border-top-color:var(--c2);
-  color:#fff;font-family:var(--mono);font-size:22px;font-weight:700;
-  padding:0 14px;outline:none;transition:all .25s;
-  -webkit-appearance:none;
-  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);
-}
-.power-field input:focus{
-  border-color:var(--c);background:rgba(0,229,255,.04);
-  box-shadow:inset 0 0 20px rgba(0,229,255,.06),0 0 0 1px rgba(0,229,255,.2);
-}
-.power-field input::placeholder{color:var(--text3);font-size:13px;font-weight:400;}
-.power-field input::-webkit-inner-spin-button{display:none;}
-.btn-calc{
-  height:54px;padding:0 20px;background:var(--g);color:#000;
-  font-family:var(--cond);font-size:14px;font-weight:900;
-  letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;
-  transition:all .2s;flex-shrink:0;
-  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
-}
-.btn-calc:hover{background:#ffd740;box-shadow:0 0 24px rgba(255,193,7,.4);}
-.btn-calc:active{transform:scale(.97);}
-
-/* ── SEAT SCALE ── */
-.seat-scale{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:16px;
-}
-.si{
-  padding:10px 4px;border:1px solid var(--line);
-  text-align:center;opacity:.25;transition:all .35s;position:relative;
-}
-.si.active{opacity:1;}
-.si.active::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-}
-.si.active.sw{border-color:rgba(148,163,184,.4);background:rgba(148,163,184,.05);}
-.si.active.sw::after{background:rgba(148,163,184,.6);}
-.si.active.sb{border-color:rgba(0,229,255,.4);background:rgba(0,229,255,.05);box-shadow:0 0 12px rgba(0,229,255,.1);}
-.si.active.sb::after{background:var(--c);box-shadow:0 0 8px var(--c);}
-.si.active.sp{border-color:rgba(206,147,216,.4);background:rgba(206,147,216,.05);box-shadow:0 0 12px rgba(206,147,216,.1);}
-.si.active.sp::after{background:var(--p);}
-.si.active.sg{border-color:rgba(255,193,7,.5);background:rgba(255,193,7,.06);box-shadow:0 0 16px rgba(255,193,7,.2);animation:sglow 2s ease-in-out infinite;}
-.si.active.sg::after{background:var(--g);box-shadow:0 0 8px var(--g);}
-@keyframes sglow{0%,100%{box-shadow:0 0 10px rgba(255,193,7,.15);}50%{box-shadow:0 0 24px rgba(255,193,7,.4);}}
-.si-ico{font-size:18px;display:block;margin-bottom:4px;}
-.si-name{font-family:var(--cond);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
-.si-name.sw{color:#94a3b8;} .si-name.sb{color:var(--c);} .si-name.sp{color:var(--p);} .si-name.sg{color:var(--g);}
-.si-range{font-family:var(--mono);font-size:8px;color:var(--text3);margin-top:2px;}
-
-/* ── SEAT RESULT ── */
-.seat-result{display:none;margin-top:12px;animation:fadeIn .4s ease;}
-.seat-result.visible{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-
-.seat-display{
-  display:flex;align-items:center;gap:14px;
-  padding:16px;border:1px solid;position:relative;overflow:hidden;
-}
-.seat-display::after{
-  content:'CONFIRMED';position:absolute;
-  right:-8px;top:50%;transform:translateY(-50%) rotate(90deg);
-  font-family:var(--mono);font-size:7px;letter-spacing:3px;opacity:.2;
-}
-.seat-display.sw{border-color:rgba(148,163,184,.3);background:rgba(148,163,184,.04);}
-.seat-display.sb{border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.04);}
-.seat-display.sp{border-color:rgba(206,147,216,.35);background:rgba(206,147,216,.04);}
-.seat-display.sg{border-color:rgba(255,193,7,.4);background:rgba(255,193,7,.04);}
-.seat-ico{font-size:40px;line-height:1;flex-shrink:0;}
-.seat-nm{
-  font-family:var(--cond);font-size:26px;font-weight:900;
-  letter-spacing:2px;text-transform:uppercase;line-height:1;
-}
-.seat-nm.sw{color:#94a3b8;} .seat-nm.sb{color:var(--c);text-shadow:0 0 16px rgba(0,229,255,.4);}
-.seat-nm.sp{color:var(--p);} .seat-nm.sg{color:var(--g);text-shadow:0 0 20px rgba(255,193,7,.4);}
-.seat-ds{font-size:12px;color:var(--text2);margin-top:5px;line-height:1.5;font-weight:300;}
-.seat-warn{
-  display:flex;gap:8px;margin-top:10px;padding:10px 12px;
-  background:rgba(255,193,7,.04);border:1px solid rgba(255,193,7,.15);
-  border-left:2px solid rgba(255,193,7,.4);
-  font-family:var(--mono);font-size:10px;color:var(--text2);line-height:1.7;
-}
 
 /* ── ALLIANCES ── */
 .allo{margin-bottom:6px;}
@@ -394,42 +310,9 @@ footer{
     <p class="hero-sub" id="hDesc"></p>
   </div>
 
-  <!-- SIMULATOR -->
-  <div class="sec">
-    <span class="sec-num">01</span>
-    <span class="sec-title" id="simTitle"></span>
-  </div>
-  <div class="panel panel-gold">
-    <div class="corner corner-tl"></div><div class="corner corner-tr"></div>
-    <div class="corner corner-bl"></div><div class="corner corner-br"></div>
-    <div class="panel-text" id="simIntro"></div>
-    <div class="power-row">
-      <div class="power-field">
-        <input type="number" id="powerInput" min="0">
-      </div>
-      <button class="btn-calc" id="simBtn" onclick="calcSeat()"></button>
-    </div>
-    <div class="seat-scale">
-      <div class="si sw"><span class="si-ico">🪑</span><div class="si-name sw">FOLLOW.</div><div class="si-range">&lt;100M</div></div>
-      <div class="si sb"><span class="si-ico">🔵</span><div class="si-name sb">PIONEER</div><div class="si-range">100–150M</div></div>
-      <div class="si sp"><span class="si-ico">🟣</span><div class="si-name sp">CONTRIB.</div><div class="si-range">150–210M</div></div>
-      <div class="si sg"><span class="si-ico">👑</span><div class="si-name sg">ELITE</div><div class="si-range">&gt;210M</div></div>
-    </div>
-    <div class="seat-result" id="seatResult">
-      <div class="seat-display" id="seatDisplay">
-        <div class="seat-ico" id="seatIcon"></div>
-        <div>
-          <div class="seat-nm" id="seatName"></div>
-          <div class="seat-ds" id="seatDesc"></div>
-        </div>
-      </div>
-      <div class="seat-warn" id="simWarning"></div>
-    </div>
-  </div>
-
   <!-- ALLIANCES -->
   <div class="sec">
-    <span class="sec-num">02</span>
+    <span class="sec-num">01</span>
     <span class="sec-title" id="allTitle"></span>
   </div>
   <div class="panel-text" style="font-size:13px;margin-bottom:14px;padding-left:2px;" id="allIntro"></div>
@@ -438,7 +321,7 @@ footer{
   <!-- FORM -->
   <div id="formSection">
     <div class="sec">
-      <span class="sec-num">03</span>
+      <span class="sec-num">02</span>
       <span class="sec-title" id="formTitle"></span>
     </div>
     <div class="panel">
@@ -451,8 +334,14 @@ footer{
           <input class="field-in" type="text" id="fNick">
         </div>
         <div class="field">
-          <div class="field-lbl" id="lPower"></div>
-          <input class="field-in" type="number" id="fPower" min="0">
+          <div class="field-lbl" id="lSeat"></div>
+          <select class="field-sel" id="fSeat">
+            <option value="" id="sOpt0"></option>
+            <option value="FOLLOWER">🪑 FOLLOWER</option>
+            <option value="PIONEER">🔵 PIONEER</option>
+            <option value="CONTRIBUTOR">🟣 CONTRIBUTOR</option>
+            <option value="ELITE ⚡">👑 ELITE</option>
+          </select>
         </div>
       </div>
       <div class="form-row">
@@ -500,17 +389,12 @@ const T = {
   it:{
     badge:'◆ ORGANIZZATO DA [NgC] NIGHT COMMANDO',
     h1:'TRANSFER<br>SURGE',
-    hdesc:'Candidatura aperta a tutti i player del server. Trova la tua sedia e scegli la tua alleanza.',
-    simTitle:'SIMULATORE SEDIA',
-    simIntro:'Inserisci la tua <em>potenza totale eroi</em> per stimare il colore della tua sedia. Valore approssimativo — le soglie cambiano ad ogni Transfer Surge.',
-    simPh:'es. 130000000',simBtn:'CALCOLA',
-    simWarn:'⚠ Stima basata su soglie medie. Il colore reale dipenderà dalla forza del tuo gruppo di server al momento dell\'evento.',
-    seatDesc:{white:'Giocatore in crescita. Posti disponibili in buona quantità.',blue:'Giocatore consolidato. Risorsa preziosa per qualsiasi alleanza.',purple:'Giocatore avanzato. Posti limitati — i server forti ti cercano.',gold:'Top player. Posti rarissimi. Il tuo arrivo cambia le sorti di un server.'},
+    hdesc:'Candidatura aperta a tutti i player del server. Indica la tua sedia e scegli la tua alleanza.',
     allTitle:'LE NOSTRE ALLEANZE',
     allIntro:'Il Transfer Surge #1105 coinvolge tutte le alleanze del server. Esplora i profili e candidati a quella che fa per te.',
     formTitle:'LA TUA CANDIDATURA',
     lNick:'Nickname *',nickPh:'Il tuo nome in gioco',
-    lPower:'Potenza *',
+    lSeat:'Colore sedia *',seatPh:'— Scegli la tua sedia —',
     lServer:'Server *',serverPh:'es. #1082',
     lIntent:'Vuoi venire su #1105?',
     iOpts:['— Seleziona —','Sì, assolutamente!','Mi interessa, più info','Forse, sto valutando','No, solo per info'],
@@ -526,16 +410,11 @@ const T = {
   fr:{
     badge:'◆ ORGANISÉ PAR [NgC] NIGHT COMMANDO',
     h1:'TRANSFER<br>SURGE',
-    hdesc:'Candidature ouverte à tous les joueurs du serveur. Trouve ton siège et choisis ton alliance.',
-    simTitle:'SIMULATEUR DE SIÈGE',
-    simIntro:'Saisis ta <em>puissance totale des héros</em> pour estimer la couleur de ton siège. Valeur approximative — les seuils varient à chaque Transfer Surge.',
-    simPh:'ex. 130000000',simBtn:'CALCULER',
-    simWarn:'⚠ Estimation basée sur des seuils moyens. La couleur réelle dépendra de la force de ton groupe au moment de l\'événement.',
-    seatDesc:{white:'Joueur en progression. Places disponibles en bonne quantité.',blue:'Joueur confirmé. Une ressource précieuse pour toute alliance.',purple:'Joueur avancé. Places limitées — les serveurs forts te recherchent.',gold:'Top joueur. Places rarissimes. Ton arrivée change le destin d\'un serveur.'},
+    hdesc:'Candidature ouverte à tous les joueurs du serveur. Indique ton siège et choisis ton alliance.',
     allTitle:'NOS ALLIANCES',
     allIntro:'Le Transfer Surge #1105 implique toutes les alliances du serveur. Explore les profils et postule à celle qui te correspond.',
     formTitle:'TA CANDIDATURE',
-    lNick:'Pseudo *',nickPh:'Ton pseudo dans le jeu',lPower:'Puissance *',lServer:'Serveur *',serverPh:'ex. #1082',
+    lNick:'Pseudo *',nickPh:'Ton pseudo dans le jeu',lSeat:'Couleur du siège *',seatPh:'— Choisis ton siège —',lServer:'Serveur *',serverPh:'ex. #1082',
     lIntent:'Veux-tu venir sur #1105 ?',
     iOpts:['— Sélectionner —','Oui, absolument !','Ça m\'intéresse, plus d\'infos','Peut-être, j\'évalue encore','Non, juste pour info'],
     lAlliance:'Alliance préférée *',alliancePh:'— Choisir une alliance —',
@@ -549,16 +428,11 @@ const T = {
   en:{
     badge:'◆ ORGANIZED BY [NgC] NIGHT COMMANDO',
     h1:'TRANSFER<br>SURGE',
-    hdesc:'Open to all players on the server. Find your seat and choose your alliance.',
-    simTitle:'SEAT SIMULATOR',
-    simIntro:'Enter your <em>total hero power</em> to estimate your seat color. Approximate value — thresholds change with every Transfer Surge.',
-    simPh:'e.g. 130000000',simBtn:'CALCULATE',
-    simWarn:'⚠ Estimate based on average thresholds. Your real color depends on your server group\'s strength at event time.',
-    seatDesc:{white:'Growing player. Seats available in good quantity.',blue:'Established player. A valuable asset for any alliance.',purple:'Advanced player. Limited seats — strong servers want you.',gold:'Top player. Extremely rare seats. Your arrival changes a server\'s fate.'},
+    hdesc:'Open to all players on the server. Indicate your seat and choose your alliance.',
     allTitle:'OUR ALLIANCES',
     allIntro:'Transfer Surge #1105 involves all alliances on the server. Explore their profiles and apply to the one that suits you.',
     formTitle:'YOUR APPLICATION',
-    lNick:'Nickname *',nickPh:'Your in-game name',lPower:'Power *',lServer:'Server *',serverPh:'e.g. #1082',
+    lNick:'Nickname *',nickPh:'Your in-game name',lSeat:'Seat color *',seatPh:'— Choose your seat —',lServer:'Server *',serverPh:'e.g. #1082',
     lIntent:'Do you want to join #1105?',
     iOpts:['— Select —','Yes, absolutely!','Interested, want more info','Maybe, still considering','No, just for info'],
     lAlliance:'Preferred Alliance *',alliancePh:'— Choose an alliance —',
@@ -572,16 +446,11 @@ const T = {
   de:{
     badge:'◆ ORGANISIERT VON [NgC] NIGHT COMMANDO',
     h1:'TRANSFER<br>SURGE',
-    hdesc:'Offen für alle Spieler des Servers. Finde deinen Sitz und wähle deine Allianz.',
-    simTitle:'SITZ-SIMULATOR',
-    simIntro:'Gib deine <em>gesamte Heldenstärke</em> ein, um deine Sitzfarbe abzuschätzen. Ungefährer Wert — Schwellenwerte variieren bei jedem Transfer Surge.',
-    simPh:'z.B. 130000000',simBtn:'BERECHNEN',
-    simWarn:'⚠ Schätzung auf Basis durchschnittlicher Schwellenwerte. Die echte Farbe hängt von der Stärke deiner Servergruppe ab.',
-    seatDesc:{white:'Wachsender Spieler. Viele Plätze verfügbar.',blue:'Erfahrener Spieler. Wertvolle Ressource für jede Allianz.',purple:'Fortgeschrittener Spieler. Begrenzte Plätze — starke Server suchen dich.',gold:'Top-Spieler. Äußerst seltene Plätze. Deine Ankunft verändert ein Server-Schicksal.'},
+    hdesc:'Offen für alle Spieler des Servers. Gib deinen Sitz an und wähle deine Allianz.',
     allTitle:'UNSERE ALLIANZEN',
     allIntro:'Der Transfer Surge #1105 umfasst alle Allianzen des Servers. Erkunde die Profile und bewirb dich bei der passenden.',
     formTitle:'DEINE BEWERBUNG',
-    lNick:'Nickname *',nickPh:'Dein Spielername',lPower:'Stärke *',lServer:'Server *',serverPh:'z.B. #1082',
+    lNick:'Nickname *',nickPh:'Dein Spielername',lSeat:'Sitzfarbe *',seatPh:'— Wähle deinen Sitz —',lServer:'Server *',serverPh:'z.B. #1082',
     lIntent:'Möchtest du zu #1105?',
     iOpts:['— Auswählen —','Ja, auf jeden Fall!','Interessiert, mehr Infos','Vielleicht, ich überlege noch','Nein, nur zur Info'],
     lAlliance:'Bevorzugte Allianz *',alliancePh:'— Allianz wählen —',
@@ -595,24 +464,15 @@ const T = {
 };
 
 const ALLIANCES = [
-  {tag:'NgC', name:'Night Commando',      rank:'#1 · 20.4B'},
-  {tag:'DJN', name:'THE RISE',            rank:'#2 · 17.9B'},
-  {tag:'VNEM',name:'True Unity',          rank:'#3 · 17.3B'},
-  {tag:'LdKy',name:'GottisUnitedKnights', rank:'#4 · 15.6B'},
-  {tag:'FmLy',name:'Family01',            rank:'#5 · 14.1B'},
-  {tag:'BwF', name:'Better with Family',  rank:'#6 · 13.9B'},
-  {tag:'CZNS',name:'CheZ NouS',           rank:'#8 · 12.3B'},
-  {tag:'GLDY',name:'GLADİATORS',          rank:'#9 · 8.3B'},
+  {tag:'NgC', name:'Night Commando',      rank:'#1 · 26.6B'},
+  {tag:'DJN', name:'THE RISE',            rank:'#2 · 23.4B'},
+  {tag:'VNEM',name:'True Unity',          rank:'#3 · 21.9B'},
+  {tag:'LdKy',name:'GottisUnitedKnights', rank:'#4 · 20.9B'},
+  {tag:'CZNS',name:'CheZ NouS',           rank:'#5 · 18.4B'},
+  {tag:'FmLy',name:'Family01',            rank:'#6 · 17.6B'},
 ];
 
-const SEATS = [
-  {cls:'sw',name:'FOLLOWER',   icon:'🪑',scaleIdx:0,dk:'white'},
-  {cls:'sb',name:'PIONEER',    icon:'🔵',scaleIdx:1,dk:'blue'},
-  {cls:'sp',name:'CONTRIBUTOR',icon:'🟣',scaleIdx:2,dk:'purple'},
-  {cls:'sg',name:'ELITE ⚡',   icon:'👑',scaleIdx:3,dk:'gold'},
-];
-
-let lang='it', lastSeatIdx=-1, remoteAllianceTexts={};
+let lang='it', remoteAllianceTexts={};
 
 function setLang(l){
   lang=l; document.documentElement.lang=l;
@@ -621,18 +481,14 @@ function setLang(l){
   document.getElementById('hBadge').textContent=t.badge;
   document.getElementById('hTitle').innerHTML=t.h1;
   document.getElementById('hDesc').textContent=t.hdesc;
-  document.getElementById('simTitle').textContent=t.simTitle;
-  document.getElementById('simIntro').innerHTML=t.simIntro;
-  document.getElementById('powerInput').placeholder=t.simPh;
-  document.getElementById('simBtn').textContent=t.simBtn;
-  document.getElementById('simWarning').textContent=t.simWarn;
   document.getElementById('allTitle').textContent=t.allTitle;
   document.getElementById('allIntro').textContent=t.allIntro;
   buildAlliances();
   document.getElementById('formTitle').textContent=t.formTitle;
   document.getElementById('lNick').textContent=t.lNick;
   document.getElementById('fNick').placeholder=t.nickPh;
-  document.getElementById('lPower').textContent=t.lPower;
+  document.getElementById('lSeat').textContent=t.lSeat;
+  document.getElementById('sOpt0').textContent=t.seatPh;
   document.getElementById('lServer').textContent=t.lServer;
   document.getElementById('fServer').placeholder=t.serverPh;
   document.getElementById('lIntent').textContent=t.lIntent;
@@ -644,7 +500,6 @@ function setLang(l){
   t.iOpts.forEach((txt,i)=>{const el=document.getElementById('iOpt'+i);if(el)el.textContent=txt;});
   document.getElementById('okTitle').textContent=t.okTitle;
   document.getElementById('okSub').textContent=t.okSub;
-  if(lastSeatIdx>=0)renderSeat(lastSeatIdx,false);
 }
 
 function buildAlliances(){
@@ -683,57 +538,17 @@ async function loadAllianceTexts(){
   }catch(err){console.warn('loadAllianceTexts:',err);}
 }
 
-function getSeatIdx(p){
-  if(p<100e6)return 0;
-  if(p<150e6)return 1;
-  if(p<210e6)return 2;
-  return 3;
-}
-
-function renderSeat(idx,scroll){
-  const s=SEATS[idx],t=T[lang];
-  const disp=document.getElementById('seatDisplay');
-  disp.className=`seat-display ${s.cls}`;
-  document.getElementById('seatIcon').textContent=s.icon;
-  const nm=document.getElementById('seatName');
-  nm.className=`seat-nm ${s.cls}`; nm.textContent=s.name;
-  document.getElementById('seatDesc').textContent=t.seatDesc[s.dk];
-  document.querySelectorAll('.si').forEach((el,i)=>el.classList.toggle('active',i===s.scaleIdx));
-  const res=document.getElementById('seatResult');
-  res.classList.add('visible');
-  if(scroll)res.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-function calcSeat(){
-  const raw=document.getElementById('powerInput').value.replace(/[,.]/g,'');
-  const val=parseFloat(raw);
-  if(!val||val<=0){alert(T[lang].errPower);return;}
-  document.getElementById('fPower').value=val;
-  lastSeatIdx=getSeatIdx(val);
-  renderSeat(lastSeatIdx,true);
-}
-
-document.getElementById('powerInput').addEventListener('keydown',e=>{if(e.key==='Enter')calcSeat();});
-
 function submitForm(){
   const t=T[lang];
   const nick=document.getElementById('fNick').value.trim();
-  const power=document.getElementById('fPower').value;
+  const seat=document.getElementById('fSeat').value;
   const server=document.getElementById('fServer').value.trim();
   const alliance=document.getElementById('fAlliance').value;
-  if(!nick||!server||!alliance){alert(t.errFields);return;}
-  // Calcola sedia automaticamente se l'utente non ha usato il simulatore
-  let seatName='';
-  const rawPower=parseFloat(String(power).replace(/[,.]/g,''));
-  if(rawPower>0){
-    const autoIdx=getSeatIdx(rawPower);
-    if(lastSeatIdx<0)lastSeatIdx=autoIdx;
-    seatName=SEATS[lastSeatIdx].name;
-  }
-  const payload={lang,nickname:nick,power:power||'',server,alliance,
+  if(!nick||!seat||!server||!alliance){alert(t.errFields);return;}
+  const payload={lang,nickname:nick,server,alliance,
     intent:document.getElementById('fIntent').value,
     bio:document.getElementById('fBio').value.trim(),
-    seat:seatName,ts:new Date().toISOString()};
+    seat,ts:new Date().toISOString()};
   const btn=document.getElementById('btnSubmit');
   btn.textContent='...';btn.disabled=true;
   fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
