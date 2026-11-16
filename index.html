@@ -342,6 +342,29 @@ const ALLIANCES=[
   {tag:'VNEM',name:'True Unity',          pw:24.1},
   {tag:'FmLy',name:'Family01',            pw:21.7},
 ];
+// presentazioni di base; se i leader salvano un testo dalla dashboard, vince quello
+const DEFAULT_REQ={
+  NgC:{it:'Alleanza italo-francese · chat IT/FR · gruppo unito e attivo ogni giorno.',
+       fr:'Alliance italo-française · chat IT/FR · groupe soudé, actif chaque jour.',
+       en:'Italian-French alliance · IT/FR chat · tight-knit, active every day.',
+       de:'Italienisch-französische Allianz · Chat IT/FR · geschlossen, täglich aktiv.'},
+  DJN:{it:'Alleanza tedesca · chat in tedesco · organizzata e competitiva.',
+       fr:'Alliance allemande · chat en allemand · organisée et compétitive.',
+       en:'German alliance · German chat · organised and competitive.',
+       de:'Deutsche Allianz · Chat auf Deutsch · organisiert und ehrgeizig.'},
+  LdKy:{it:'Alleanza inglese · chat in inglese · ambiente solido e collaborativo.',
+       fr:'Alliance anglophone · chat en anglais · ambiance solide et coopérative.',
+       en:'English-speaking alliance · English chat · solid, team-first crew.',
+       de:'Englischsprachige Allianz · Chat auf Englisch · solide und teamorientiert.'},
+  VNEM:{it:'Alleanza inglese · chat in inglese · in crescita, spazio per chi vuole fare la differenza.',
+       fr:'Alliance anglophone · chat en anglais · en progression, de la place pour qui veut peser.',
+       en:'English-speaking alliance · English chat · growing, room for players who want to make a difference.',
+       de:'Englischsprachige Allianz · Chat auf Englisch · wächst, Platz für alle, die etwas bewegen wollen.'},
+  FmLy:{it:'Alleanza internazionale · tutte le lingue benvenute · clima da famiglia.',
+       fr:'Alliance internationale · toutes les langues bienvenues · esprit famille.',
+       en:'International alliance · every language welcome · family vibe.',
+       de:'Internationale Allianz · alle Sprachen willkommen · familiäre Stimmung.'},
+};
 const PWMAX=Math.max(...ALLIANCES.map(a=>a.pw));
 
 const T={
@@ -524,7 +547,7 @@ function buildRoster(){
   const t=T[state.lang],box=$('roster');box.innerHTML='';
   ALLIANCES.forEach((a,i)=>{
     // testo dal backend pubblico: niente HTML
-    const req=String((remoteTexts[a.tag]?.[state.lang]?.req)||t.reqMissing).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+    const req=String((remoteTexts[a.tag]?.[state.lang]?.req)||DEFAULT_REQ[a.tag]?.[state.lang]||t.reqMissing).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
     const b=document.createElement('button');
     b.type='button';b.className='roster-btn'+(state.alliance===a.tag?' on':'');
     b.innerHTML=`
