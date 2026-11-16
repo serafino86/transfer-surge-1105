@@ -3,13 +3,14 @@
 // Deploy: Estensioni → Apps Script → incolla → Esegui il deployment → App web,
 // "Esegui come: me", "Chi ha accesso: chiunque". Copia l'URL /exec nelle due app.
 
-const HEAD = ['ts','lang','nickname','power','server','seat','intent','alliance','allianceName','bio','status','notes'];
+const HEAD = ['ts','lang','nickname','power','server','seat','intent','alliance','allianceName','bio','status','notes','t1power','kills'];
 const NAMES = {NgC:'Night Commando', DJN:'THE RISE', LdKy:'GottisUnitedKnights', VNEM:'True Unity', FmLy:'Family01'};
 
 function sheet_(name, head) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(name);
   if (!sh) { sh = ss.insertSheet(name); sh.appendRow(head); }
+  else if (sh.getLastColumn() < head.length) sh.getRange(1, 1, 1, head.length).setValues([head]);
   return sh;
 }
 const cand_ = () => sheet_('Candidature', HEAD);
@@ -64,7 +65,7 @@ function doPost(e) {
     // apostrofo davanti a = + - @ : il foglio non lo esegue come formula
     const s = (x, n) => { const v = String(x == null ? '' : x).slice(0, n); return /^[=+\-@]/.test(v) ? "'" + v : v; };
     cand_().appendRow([new Date().toISOString(), s(d.lang,2), s(d.nickname,40), s(d.power,15), s(d.server,10),
-      s(d.seat,15), s(d.intent,20), d.alliance, NAMES[d.alliance], s(d.bio,1000), 'In attesa', '']);
+      s(d.seat,15), s(d.intent,20), d.alliance, NAMES[d.alliance], s(d.bio,1000), 'In attesa', '', s(d.t1power,15), s(d.kills,15)]);
     return out_({success:true});
   } catch (err) { return out_({success:false, error:String(err)}); }
   finally { lock.releaseLock(); }

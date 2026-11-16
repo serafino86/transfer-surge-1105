@@ -282,6 +282,16 @@ footer{margin-top:36px;padding:22px 0 4px;border-top:1px solid var(--line);font-
           <input class="fin" type="number" id="fPower" min="0" inputmode="numeric">
         </div>
       </div>
+      <div class="frow">
+        <div class="field">
+          <label class="flabel" id="lT1" for="fT1"></label>
+          <input class="fin" type="number" id="fT1" min="0" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label class="flabel" id="lKills" for="fKills"></label>
+          <input class="fin" type="number" id="fKills" min="0" inputmode="numeric">
+        </div>
+      </div>
       <div class="field">
         <label class="flabel" id="lServer" for="fServer"></label>
         <input class="fin" type="text" id="fServer">
@@ -383,7 +393,7 @@ const T={
     rosterPicked:'Scelta',
     reqMissing:'Presentazione in arrivo…',
     formTitle:'Blocca il trasferimento',
-    lNick:'Nome in gioco',lPower:'Potenza (THP)',phPower:'es. 165000000',lServer:'Server di origine',phServer:'es. #1082',
+    lT1:'Potenza squadra T1 *',phT1:'es. 25000000',lKills:'Uccisioni totali *',phKills:'es. 1500000',lNick:'Nome in gioco',lPower:'Potenza (THP)',phPower:'es. 165000000',lServer:'Server di origine',phServer:'es. #1082',
     lIntent:'Intenzione',
     io:['— Seleziona —','Deciso, arrivo','Mi interessa, mandate info','Sto valutando','Solo per info'],
     lContact:'Hai già parlato con qualcuno dell\'alleanza?',contactYes:'Sì',contactNo:'No',
@@ -411,7 +421,7 @@ const T={
     rosterPicked:'Choisie',
     reqMissing:'Présentation à venir…',
     formTitle:'Verrouille ton transfert',
-    lNick:'Pseudo en jeu',lPower:'Puissance (THP)',phPower:'ex. 165000000',lServer:'Serveur d\'origine',phServer:'ex. #1082',
+    lT1:'Puissance escouade T1 *',phT1:'ex. 25000000',lKills:'Éliminations totales *',phKills:'ex. 1500000',lNick:'Pseudo en jeu',lPower:'Puissance (THP)',phPower:'ex. 165000000',lServer:'Serveur d\'origine',phServer:'ex. #1082',
     lIntent:'Intention',
     io:['— Sélectionner —','Décidé, j\'arrive','Intéressé, envoyez infos','J\'évalue encore','Juste pour info'],
     lContact:'As-tu déjà parlé à quelqu\'un de l\'alliance ?',contactYes:'Oui',contactNo:'Non',
@@ -439,7 +449,7 @@ const T={
     rosterPicked:'Chosen',
     reqMissing:'Intro incoming…',
     formTitle:'Lock your transfer',
-    lNick:'In-game name',lPower:'Power (THP)',phPower:'e.g. 165000000',lServer:'Home server',phServer:'e.g. #1082',
+    lT1:'T1 squad power *',phT1:'e.g. 25000000',lKills:'Total kills *',phKills:'e.g. 1500000',lNick:'In-game name',lPower:'Power (THP)',phPower:'e.g. 165000000',lServer:'Home server',phServer:'e.g. #1082',
     lIntent:'Intent',
     io:['— Select —','Locked in, I\'m coming','Interested, send info','Still weighing it','Info only'],
     lContact:'Have you already talked to someone in the alliance?',contactYes:'Yes',contactNo:'No',
@@ -467,7 +477,7 @@ const T={
     rosterPicked:'Gewählt',
     reqMissing:'Vorstellung folgt…',
     formTitle:'Transfer sichern',
-    lNick:'Spielername',lPower:'Stärke (THP)',phPower:'z.B. 165000000',lServer:'Heimatserver',phServer:'z.B. #1082',
+    lT1:'T1-Truppenstärke *',phT1:'z.B. 25000000',lKills:'Kills gesamt *',phKills:'z.B. 1500000',lNick:'Spielername',lPower:'Stärke (THP)',phPower:'z.B. 165000000',lServer:'Heimatserver',phServer:'z.B. #1082',
     lIntent:'Absicht',
     io:['— Auswählen —','Entschieden, ich komme','Interessiert, Infos bitte','Überlege noch','Nur zur Info'],
     lContact:'Hast du schon mit jemandem der Allianz gesprochen?',contactYes:'Ja',contactNo:'Nein',
@@ -501,6 +511,8 @@ function setLang(l){
   $('formTitle').textContent=t.formTitle;
   $('lNick').textContent=t.lNick;
   $('lPower').textContent=t.lPower;$('fPower').placeholder=t.phPower;
+  $('lT1').textContent=t.lT1;$('fT1').placeholder=t.phT1;
+  $('lKills').textContent=t.lKills;$('fKills').placeholder=t.phKills;
   $('lServer').textContent=t.lServer;$('fServer').placeholder=t.phServer;
   $('lIntent').textContent=t.lIntent;
   t.io.forEach((x,i)=>$('io'+i).textContent=x);
@@ -582,7 +594,9 @@ function submitForm(){
   const nick=$('fNick').value.trim();
   const server=$('fServer').value.trim();
   if(!state.seat){alert(t.errSeat);return;}
-  if(!nick||!server||!state.alliance){alert(t.errFields);return;}
+  const num=id=>($(id).value||'').replace(/[^\d]/g,'');
+  const t1=num('fT1'),kills=num('fKills');
+  if(!nick||!server||!state.alliance||!t1||!kills){alert(t.errFields);return;}
   let bio=$('fBio').value.trim();
   if(state.contact==='yes'){
     const who=$('fContactWho').value.trim();
@@ -592,7 +606,7 @@ function submitForm(){
   const btn=$('btnSubmit');btn.disabled=true;btn.textContent=t.sending;
   const power=($('fPower').value||'').replace(/[^\d]/g,'');
   const payload={
-    lang:state.lang,nickname:nick,power:power?parseInt(power,10):'',
+    lang:state.lang,nickname:nick,power:power?parseInt(power,10):'',t1power:parseInt(t1,10),kills:parseInt(kills,10),
     server,alliance:state.alliance,
     intent:$('fIntent').value,bio,
     seat:state.seat,ts:new Date().toISOString(),
