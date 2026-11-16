@@ -523,7 +523,8 @@ function paintPlate(i){
 function buildRoster(){
   const t=T[state.lang],box=$('roster');box.innerHTML='';
   ALLIANCES.forEach((a,i)=>{
-    const req=(remoteTexts[a.tag]?.[state.lang]?.req)||t.reqMissing;
+    // testo dal backend pubblico: niente HTML
+    const req=String((remoteTexts[a.tag]?.[state.lang]?.req)||t.reqMissing).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
     const b=document.createElement('button');
     b.type='button';b.className='roster-btn'+(state.alliance===a.tag?' on':'');
     b.innerHTML=`
