@@ -138,6 +138,7 @@ body::before{
 .plate.on .plate-stamp{transform:scale(1);opacity:1;}
 
 .tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+@media(max-width:520px){.tiers{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .tier{
   background:var(--card);border:1px solid var(--line);border-radius:16px;color:var(--muted);
   padding:14px 4px 12px;cursor:pointer;transition:.2s;font-family:inherit;
@@ -334,12 +335,13 @@ const TIERS=[
 ];
 
 const ALLIANCES=[
-  {tag:'NgC', name:'Night Commando',      pw:26.6},
-  {tag:'DJN', name:'THE RISE',            pw:23.4},
-  {tag:'VNEM',name:'True Unity',          pw:21.9},
-  {tag:'LdKy',name:'GottisUnitedKnights', pw:20.9},
-  {tag:'CZNS',name:'CheZ NouS',           pw:18.4},
-  {tag:'FmLy',name:'Family01',            pw:17.6},
+  // ordine = accordi tra alleanze (NgC prima), non la classifica potenza; pw = classifica in gioco 16.11.2026
+  {tag:'NgC', name:'Night Commando',      pw:27.5},
+  {tag:'DJN', name:'THE RISE',            pw:27.8},
+  {tag:'LdKy',name:'GottisUnitedKnights', pw:26.3},
+  {tag:'VNEM',name:'True Unity',          pw:24.1},
+  {tag:'FmLy',name:'Family01',            pw:21.7},
+  {tag:'CZNS',name:'CheZ NouS',           pw:21.7},
 ];
 const PWMAX=Math.max(...ALLIANCES.map(a=>a.pw));
 
@@ -347,13 +349,13 @@ const T={
   it:{
     eyebrow:'Reclutamento aperto — [NgC] Night Commando',
     lede:'Il server #1105 apre le porte. Scegli il tuo rango, punta un\'alleanza e blocca il trasferimento.',
-    dispatch:'#1105 · STATO: APERTO · TUTTI I SERVER AMMESSI',
+    dispatch:'#1105 · STATO: LIMITATO · POSTI 60 / 40 / 5 / 1',
     tierTitle:'Scegli il tuo rango',
-    tierHint:'Seleziona la sedia che occupi nel tuo server. Dice alle alleanze quanto vali.',
+    tierHint:'Guarda il tuo stato in gioco (Aumento dei trasferimenti → Il tuo stato) e scegli la stessa sedia.',
     plateEmpty:'Seleziona il rango',
     tierLock:'Scelto',
-    tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
-    tierDesc:{white:'In crescita. Molti posti disponibili.',blue:'Consolidato. Risorsa preziosa.',purple:'Avanzato. Posti limitati — i server forti ti cercano.',gold:'Top player. Posti rarissimi. Cambi le sorti di un server.'},
+    tierNames:{white:'Follower',blue:'Pioniere',purple:'Collaboratore',gold:'Ricostruttore'},
+    tierDesc:{white:'Punteggio trasferimento < 721,3K · 60 posti su #1105.',blue:'Punteggio 721,3K – 2,66M · 40 posti su #1105.',purple:'Punteggio 2,66M – 7,10M · solo 5 posti su #1105.',gold:'Punteggio > 7,10M · 1 solo posto su #1105.'},
     rosterTitle:'Alleanza di destinazione',
     rosterHint:'Tocca l\'alleanza su #1105 dove vuoi trasferirti. È la tua scelta.',
     rosterPicked:'Scelta',
@@ -375,13 +377,13 @@ const T={
   fr:{
     eyebrow:'Recrutement ouvert — [NgC] Night Commando',
     lede:'Le serveur #1105 ouvre ses portes. Choisis ton rang, vise une alliance et verrouille ton transfert.',
-    dispatch:'#1105 · STATUT : OUVERT · TOUS SERVEURS ADMIS',
+    dispatch:'#1105 · STATUT : LIMITÉ · PLACES 60 / 40 / 5 / 1',
     tierTitle:'Choisis ton rang',
-    tierHint:'Sélectionne le siège que tu occupes sur ton serveur. Il montre ta valeur aux alliances.',
+    tierHint:'Regarde ton statut en jeu (Afflux de transferts → Ton statut) et choisis le même siège.',
     plateEmpty:'Sélectionne le rang',
     tierLock:'Choisi',
     tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
-    tierDesc:{white:'En progression. Beaucoup de places.',blue:'Confirmé. Ressource précieuse.',purple:'Avancé. Places limitées — les serveurs forts te cherchent.',gold:'Top joueur. Places rarissimes. Tu changes le destin d\'un serveur.'},
+    tierDesc:{white:'Score de transfert < 721,3K · 60 places sur #1105.',blue:'Score 721,3K – 2,66M · 40 places sur #1105.',purple:'Score 2,66M – 7,10M · seulement 5 places sur #1105.',gold:'Score > 7,10M · 1 seule place sur #1105.'},
     rosterTitle:'Alliance de destination',
     rosterHint:'Touche l\'alliance sur #1105 où tu veux te transférer. C\'est ton choix.',
     rosterPicked:'Choisie',
@@ -403,13 +405,13 @@ const T={
   en:{
     eyebrow:'Recruiting now — [NgC] Night Commando',
     lede:'Server #1105 is opening its gates. Pick your rank, target an alliance, and lock your transfer.',
-    dispatch:'#1105 · STATUS: OPEN · ALL SERVERS ELIGIBLE',
+    dispatch:'#1105 · STATUS: LIMITED · SEATS 60 / 40 / 5 / 1',
     tierTitle:'Pick your rank',
-    tierHint:'Select the seat you hold on your server. It shows alliances your strength.',
+    tierHint:'Check your status in game (Transfer Surge → Your Status) and pick the same seat.',
     plateEmpty:'Select your rank',
     tierLock:'Picked',
     tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
-    tierDesc:{white:'Growing. Seats available in good numbers.',blue:'Established. A valuable asset.',purple:'Advanced. Limited seats — strong servers want you.',gold:'Top player. Rare seats. You change a server\'s fate.'},
+    tierDesc:{white:'Transfer score < 721.3K · 60 seats on #1105.',blue:'Score 721.3K – 2.66M · 40 seats on #1105.',purple:'Score 2.66M – 7.10M · only 5 seats on #1105.',gold:'Score > 7.10M · just 1 seat on #1105.'},
     rosterTitle:'Destination alliance',
     rosterHint:'Tap the alliance on #1105 you want to transfer to. It\'s your pick.',
     rosterPicked:'Chosen',
@@ -431,13 +433,13 @@ const T={
   de:{
     eyebrow:'Rekrutierung offen — [NgC] Night Commando',
     lede:'Server #1105 öffnet die Tore. Wähle deinen Rang, visiere eine Allianz an und sichere deinen Transfer.',
-    dispatch:'#1105 · STATUS: OFFEN · ALLE SERVER ZUGELASSEN',
+    dispatch:'#1105 · STATUS: BEGRENZT · PLÄTZE 60 / 40 / 5 / 1',
     tierTitle:'Wähle deinen Rang',
-    tierHint:'Wähle den Sitz, den du auf deinem Server hast. Er zeigt Allianzen deine Stärke.',
+    tierHint:'Prüfe deinen Status im Spiel (Transfer Surge → Dein Status) und wähle denselben Sitz.',
     plateEmpty:'Rang wählen',
     tierLock:'Gewählt',
     tierNames:{white:'Follower',blue:'Pioneer',purple:'Contributor',gold:'Elite'},
-    tierDesc:{white:'Im Aufbau. Viele Plätze frei.',blue:'Etabliert. Wertvolle Ressource.',purple:'Fortgeschritten. Begrenzte Plätze — starke Server suchen dich.',gold:'Top-Spieler. Seltene Plätze. Du veränderst ein Server-Schicksal.'},
+    tierDesc:{white:'Transfer-Punkte < 721,3K · 60 Plätze auf #1105.',blue:'Punkte 721,3K – 2,66M · 40 Plätze auf #1105.',purple:'Punkte 2,66M – 7,10M · nur 5 Plätze auf #1105.',gold:'Punkte > 7,10M · nur 1 Platz auf #1105.'},
     rosterTitle:'Ziel-Allianz',
     rosterHint:'Tippe die Allianz auf #1105 an, zu der du wechseln willst. Deine Wahl.',
     rosterPicked:'Gewählt',
